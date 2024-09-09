@@ -3,23 +3,29 @@ const	operator = document.querySelectorAll(".operator");
 const	equal = document.querySelector("#equal");
 const	clear = document.querySelector("#clear");
 const	digits = document.querySelector("#digits");
+const	float = document.querySelector(".float");
 
 let		number1;
 let		number2 = 0;
 let		operand = "";
 let 	flag = 0;
 let		result = 0;
+let		floatflag = 0;
 
 function upDateScreen(button){
 	if (digits.textContent == 0 || flag || result){
 		digits.textContent = "";
 	}
 	if (digits.textContent.length < 16){
-		digits.textContent += button.textContent - 0;
+			digits.textContent += button.textContent;
 		console.log(typeof digits.textContent);
 		flag = 0;
 	}	
 }
+
+float.addEventListener("click", function (){
+	digits.textContent += ".";
+});
 
 buttons.forEach((button) =>{
 	if (button.classList.length === 1){
@@ -31,13 +37,15 @@ buttons.forEach((button) =>{
 
 operator.forEach((button) =>{
 		button.addEventListener("click", function () {
-			if (number1 === 0){
-				number1 = parseFloat(digits.textContent);
+			if (!operand){
+				if (number1 === 0){
+					number1 = parseFloat(digits.textContent);
+				}
+				clearBackground();
+				operand = button.textContent;
+				button.style.backgroundColor = "rgb(255, 214, 137)";
+				flag = 1;
 			}
-			clearBackground();
-			operand = button.textContent;
-			button.style.backgroundColor = "rgb(255, 214, 137)";
-			flag = 1;
 		});
 });
 
@@ -62,6 +70,7 @@ equal.addEventListener("click", function () {
 		number1 = 0;
 		number2 = 0;
 		operand = "";
+		flag = 0;
 		clearBackground();
 		}
 });
@@ -71,6 +80,7 @@ clear.addEventListener("click", function () {
 	number2 = 0;
 	operand = "";
 	result = 0;
+	flag = 0;
 	digits.textContent = result;
 	clearBackground();
 });
