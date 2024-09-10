@@ -24,7 +24,10 @@ function upDateScreen(button){
 }
 
 float.addEventListener("click", function (){
-	digits.textContent += ".";
+	if (!floatflag){
+		digits.textContent += ".";
+		floatflag = 1;
+	}
 });
 
 buttons.forEach((button) =>{
@@ -66,11 +69,17 @@ equal.addEventListener("click", function () {
 			else if (operand === "+"){
 				result = number1 + number2;
 			}
-		digits.textContent = result;
+		if (floatflag){
+			digits.textContent = parseFloat(result.toFixed(4));
+		}
+		else{
+			digits.textContent = result;
+		}
 		number1 = 0;
 		number2 = 0;
 		operand = "";
 		flag = 0;
+		floatflag = 0;
 		clearBackground();
 		}
 });
@@ -81,6 +90,7 @@ clear.addEventListener("click", function () {
 	operand = "";
 	result = 0;
 	flag = 0;
+	floatflag = 0;
 	digits.textContent = result;
 	clearBackground();
 });
